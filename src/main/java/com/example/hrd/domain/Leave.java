@@ -1,12 +1,14 @@
 package com.example.hrd.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 public class Leave {
+    public enum LeaveType {SICK,PERSONAL,VACATION,MATERNITY,MILITARY,ORDINATION,TRAINING}
+    public enum StatusLeave {APPROVE,DISAPPROVE}
     @Id
     private Integer id;
     private String reasonLeave;
@@ -17,11 +19,17 @@ public class Leave {
     private LocalDateTime endTime;
     private float totalDateLeave;
     private File fileLeave;
-    private String statusLeave;
-    /*FK
-    private Integer id; //id_employee
-    private Integer id; //id_leave_type
-    */
+    private String nameApprove;
+    private LocalDateTime dateApprove;
+
+    @Enumerated(EnumType.STRING)
+    private LeaveType leaveType;
+    @Enumerated(EnumType.STRING)
+    private StatusLeave statusLeave;
+
+    //employee_id
+    @ManyToOne
+    private Employee employee;
 
     public Integer getId() {
         return id;
@@ -95,11 +103,56 @@ public class Leave {
         this.fileLeave = fileLeave;
     }
 
-    public String getStatusLeave() {
+    public String getNameApprove() {
+        return nameApprove;
+    }
+
+    public void setNameApprove(String nameApprove) {
+        this.nameApprove = nameApprove;
+    }
+
+    public LocalDateTime getDateApprove() {
+        return dateApprove;
+    }
+
+    public void setDateApprove(LocalDateTime dateApprove) {
+        this.dateApprove = dateApprove;
+    }
+
+    public LeaveType getLeaveType() {
+        return leaveType;
+    }
+
+    public void setLeaveType(LeaveType leaveType) {
+        this.leaveType = leaveType;
+    }
+
+    public StatusLeave getStatusLeave() {
         return statusLeave;
     }
 
-    public void setStatusLeave(String statusLeave) {
+    public void setStatusLeave(StatusLeave statusLeave) {
         this.statusLeave = statusLeave;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Leave leave = (Leave) o;
+        return id.equals(leave.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
