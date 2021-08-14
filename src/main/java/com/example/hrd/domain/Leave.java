@@ -29,7 +29,7 @@ public class Leave {
 
     //employee_id
     @ManyToOne
-    private Employee employee;
+    private Employee employees;
 
     public Integer getId() {
         return id;
@@ -136,11 +136,11 @@ public class Leave {
     }
 
     public Employee getEmployee() {
-        return employee;
+        return employees;
     }
 
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
+    public void setEmployee(Employee employees) {
+        this.employees = employees;
     }
 
     @Override

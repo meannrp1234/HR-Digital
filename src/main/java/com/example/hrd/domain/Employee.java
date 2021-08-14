@@ -1,11 +1,16 @@
 package com.example.hrd.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Employee {
+    public enum Position{STAFF,HEAD}
     @Id private Integer id;
     private String firstName;
     private String lastName;
@@ -13,11 +18,24 @@ public class Employee {
     private LocalDateTime dateBorn;
     private String address;
     private String tel;
-    private String position;
+    @Enumerated(EnumType.STRING)
+    private Position position;
     private LocalDateTime startWork;
-    //private Integer id; //idDepartment
-    //private Integer id; //idemployeeType
+    private String username;
+    private String password;
 
+    @JsonManagedReference
+    @ManyToOne
+    private Department department;
+
+    @OneToMany(mappedBy = "employees")
+    private List<Leave> leaves;
+
+    @OneToMany(mappedBy = "employees")
+    private List<TimeWork> timeWorks;
+
+    @ManyToMany
+    private Set<Authority> authorities;
 
     public Integer getId() {
         return id;
@@ -36,7 +54,7 @@ public class Employee {
     public String getLastName() {
         return lastName;
     }
-    public void setLastNname(String lastName) {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
@@ -68,10 +86,10 @@ public class Employee {
         this.tel = tel;
     }
 
-    public String getPosition() {
+    public Position getPosition() {
         return position;
     }
-    public void setPosition(String position) {
+    public void setPosition(Position position) {
         this.position = position;
     }
 
@@ -80,5 +98,61 @@ public class Employee {
     }
     public void setStartWork(LocalDateTime startWork) {
         this.startWork = startWork;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public List<Leave> getLeaves() {
+        return leaves;
+    }
+    public void setLeaves(List<Leave> leaves) {
+        this.leaves = leaves;
+    }
+
+    public List<TimeWork> getTimeWorks() {
+        return timeWorks;
+    }
+    public void setTimeWorks(List<TimeWork> timeWorks) {
+        this.timeWorks = timeWorks;
+    }
+
+    public Set<Authority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<Authority> authorities) {
+        this.authorities = authorities;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Employee employees = (Employee) o;
+        return id.equals(employees.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

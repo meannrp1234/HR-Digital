@@ -16,17 +16,17 @@ public class EmployeeTypeController {
         this.repo = repo;
     }
 
-    @GetMapping("/employeeType/{idEmp_Type}")
-    public Optional<EmployeeType> find(@PathVariable Integer idEmp_Type){
-        return repo.findById(idEmp_Type);
+    @GetMapping("/employee_type/{id}")
+    public Optional<EmployeeType> find(@PathVariable Integer id){
+        return repo.findById(id);
     }
 
-    @PostMapping("/employeeType")
+    @PostMapping("/employee_type")
     public EmployeeType save(@RequestBody EmployeeType s){
         return repo.save(s);
     }
 
-    @GetMapping("/employeeType")
+    @GetMapping("/employee_type")
     public Page<EmployeeType> findAll(Pageable pageable){
         return repo.findAll(pageable);
     }

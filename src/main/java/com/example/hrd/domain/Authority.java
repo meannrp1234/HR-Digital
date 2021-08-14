@@ -1,16 +1,17 @@
 package com.example.hrd.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Authority {
     @Id
     private Integer id;
     private String name;
-    private String username;
-    private String password;
 
+    @ManyToMany
+    private Set<Employee> employees;
 
     public Integer getId() {
         return id;
@@ -24,23 +25,28 @@ public class Authority {
         return name;
     }
 
-    public void setName(String nameAuthorrity) {
-        this.name = nameAuthorrity;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUsername() {
-        return username;
+    public Set<Employee> getEmployees() {
+        return employees;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
     }
 
-    public String getPassword() {
-        return password;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Authority authority = (Authority) o;
+        return id.equals(authority.id);
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }

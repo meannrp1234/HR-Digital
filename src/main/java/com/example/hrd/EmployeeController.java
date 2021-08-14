@@ -16,9 +16,9 @@ public class EmployeeController {
         this.repo = repo;
     }
 
-    @GetMapping("/employee/{idEmp}")
-    public Optional<Employee> find(@PathVariable Integer idEmp){
-        return repo.findById(idEmp);
+    @GetMapping("/employee/{id}")
+    public Optional<Employee> find(@PathVariable Integer id){
+        return repo.findById(id);
     }
 
     @PostMapping("/employee")

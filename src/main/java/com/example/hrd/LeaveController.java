@@ -23,8 +23,8 @@ public class LeaveController {
     }
 
     @PostMapping("/leave")
-    public Leave save(@RequestBody Leave leave){
-        return repo.save(leave);
+    public Leave save(@RequestBody Leave s){
+        return repo.save(s);
     }
 
     @GetMapping("/leave")

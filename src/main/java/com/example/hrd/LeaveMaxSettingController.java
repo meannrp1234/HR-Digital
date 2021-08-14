@@ -22,8 +22,8 @@ public class LeaveMaxSettingController {
     }
 
     @PostMapping("/leave_max_setting")
-    public LeaveMaxSetting save(@RequestBody LeaveMaxSetting quota){
-        return repo.save(quota);
+    public LeaveMaxSetting save(@RequestBody LeaveMaxSetting s){
+        return repo.save(s);
     }
 
     @GetMapping("/leave_max_setting")

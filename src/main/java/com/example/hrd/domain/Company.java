@@ -2,19 +2,24 @@ package com.example.hrd.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class EmployeeType {
-    @Id private Integer id;
+//COMPANY
+public class Company {
+    @Id
+    private Integer id;
     private String name;
+    //...
+    //Uni-directional relation
+    //COMPANY ---COMPANY_DEPARTMENT----DEPARTMENT
 
-    @OneToMany
-    @JoinColumn(name = "EMPLOYEES_TYPE_ID")
-    private List<LeaveMaxSetting> leaveMaxRules;
+    //Bi-directional
+    //COMPANY ---- DEPARTMENT
+    @OneToMany(mappedBy = "company")
+    private List<Department> departments;
 
     public Integer getId() {
         return id;
@@ -26,23 +31,23 @@ public class EmployeeType {
     public String getName() {
         return name;
     }
-    public void setNameEmpType(String name) {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public List<LeaveMaxSetting> getLeaveMaxRules() {
-        return leaveMaxRules;
+    public List<Department> getDepartments() {
+        return departments;
     }
-    public void setLeaveMaxRules(List<LeaveMaxSetting> leaveMaxRules) {
-        this.leaveMaxRules = leaveMaxRules;
+    public void setDepartments(List<Department> departments) {
+        this.departments = departments;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        EmployeeType that = (EmployeeType) o;
-        return id.equals(that.id);
+        Company company = (Company) o;
+        return id.equals(company.id);
     }
 
     @Override
